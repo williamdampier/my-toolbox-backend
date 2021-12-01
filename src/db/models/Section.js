@@ -1,21 +1,21 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    return sequelize.define('User', {
+    return sequelize.define('Section', {
         id: {
             type: DataTypes.BIGINT, 
             primaryKey: true,
+            allowNull: false,
             autoIncrement: true
         },
-        firstName: {
+        title: {
           type: DataTypes.STRING,
-          allowNull: false
-        },
-        lastName: {
-          type: DataTypes.STRING
+          allowNull: false,
+          unique: true
         }
-      },{
-        timestamps: false
+
+      }, {
+          //additional options can be defined here
+          timestamps: false
       });
 };
-

@@ -6,8 +6,10 @@ const sequelize = new Sequelize(`postgres://${process.env.PG_USER}:${process.env
 
 
 const modelDefiners = [
-	require('./db/models/User'),
-	require('./db/models/Post')
+	require('./db/models/Section'),
+	require('./db/models/Category'),
+	require('./db/models/Item'),
+	require('./db/models/Handler')
 	// Add more models here...
 	// require('./models/item'),
 ];
@@ -16,6 +18,6 @@ const modelDefiners = [
 for (const modelDefiner of modelDefiners) {
 	modelDefiner(sequelize);
 }
-  //hey
+
 
 module.exports = sequelize
