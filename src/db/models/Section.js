@@ -5,7 +5,6 @@ module.exports = (sequelize) => {
         id: {
             type: DataTypes.BIGINT, 
             primaryKey: true,
-            allowNull: false,
             autoIncrement: true
         },
         title: {

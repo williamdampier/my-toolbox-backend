@@ -1,11 +1,11 @@
 const express = require('express')
 const app = express()
 const sequelize = require('./src/db')
-const userRouter = require('./src/api/routes/user.routes')
+const sectionRouter = require('./src/api/routes/section.routes')
 
 require('dotenv').config()
 app.use(express.json())
-app.use('/api', userRouter)
+app.use('/section', sectionRouter)
 const PORT = process.env.PORT || 5001
 
 
@@ -19,7 +19,7 @@ async function startApp() {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
         
-        await sequelize.sync();
+        await sequelize.sync({alter: true});
         console.log("All models were synchronized successfully.");
 
         app.listen(PORT, () => {
