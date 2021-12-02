@@ -21,10 +21,6 @@ class CategoryController {
         }
     }
 
-
-
-
-
     async getCategories(req,res) {
         const section = req.query.section
         if (section) {
@@ -37,8 +33,6 @@ class CategoryController {
                 
                 
             }       
-        
-
 
        else { try {
             const categories = await models.Category.findAll();
@@ -54,8 +48,6 @@ class CategoryController {
         
     }
 }
-
-  
 
     async getCategoryById(req,res) {
         const id = req.params.id;
@@ -85,7 +77,6 @@ class CategoryController {
             res.json(errObj);
         } 
 };
-    
 
     async deleteCategory(req,res) {
         const id = req.params.id;  

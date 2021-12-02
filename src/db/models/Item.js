@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
-        CategoryId : {
+        category_id : {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
