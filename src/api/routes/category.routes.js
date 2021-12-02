@@ -1,10 +1,10 @@
 const Router = require('express');
 const router = new Router();
 
-const sectionController = require('../controllers/category.controller');
+const categoryController = require('../controllers/category.controller');
 
 
-router.post('/', categoryController.createSection);
+router.post('/', categoryController.createCategory);
 router.get('/', categoryController.getCategories);
 router.get('/:id', categoryController.getCategoryById);
 router.put('/:id', categoryController.updateCategory);

@@ -1,3 +1,4 @@
+const { json } = require('express');
 const {models} = require('../../db')
 
 
@@ -5,43 +6,90 @@ class CategoryController {
     async createCategory(req,res) {
         const {title, section_id} = req.body;
         try {
-            const newSection = await models.Category.create({title, section_id})
-            res.json(newSection.dataValues)   
+            const section = await models.Section.findByPk(section_id)
+
+            if (!section)  {res.json(`Section with id: ${section_id} does not exist`)}
+            else {
+                const newCategory = await models.Category.create({title: title, section_id: section_id})
+                res.json(newCategory.dataValues)   
+            }
         } 
-        catch (e) { console.error(e);}   
+        catch (err) { 
+            const errObj = {};
+                err.errors.map( er => {
+                errObj[er.path] = er.message;
+            })
+            res.json(errObj);
+        }   
     }
 
     async getCategories(req,res) {
-        const sections = await models.Category.findAll();
-        res.json(sections);
+        try {
+            const categories = await models.Category.findAll();
+            res.json(categories);
+        }
+        catch (err) { 
+            const errObj = {};
+                err.errors.map( er => {
+                errObj[er.path] = er.message;
+            })
+            res.json(errObj);
+        } 
+        
     }
 
     async getCategoryById(req,res) {
         const id = req.params.id;
-        const sections = await models.Category.findByPk(id);
-        res.json(sections);        
+        const category = await models.Category.findByPk(id);
+        if (category) {res.json(category);  }
+        else  {res.json(`Category with id: ${id} does not exist`)}
+               
     }
 
     async updateCategory(req,res) {
         const id = req.params.id;
-        const {title} = req.body;        
-        await models.Category.update({title}, {
-            where: {
-                id: id
-            }
-        })
-        .then(res.json(`Section with id: ${id} succesfully updated!`))
+        const {title} = req.body; 
+
+        try {
+            await models.Category.update({title}, {
+                where: {
+                    id: id
+                }
+            })
+            res.json(`Category with id: ${id} succesfully updated!`)
+           }
+           catch (err) { 
+            const errObj = {};
+                err.errors.map( er => {
+                errObj[er.path] = er.message;
+            })
+            res.json(errObj);
+        } 
 };
     
 
     async deleteCategory(req,res) {
-        const id = req.params.id;     
-        await models.Category.destroy({
-            where: {
-                id: id
+        const id = req.params.id;  
+        try {
+            const category = await models.Category.findByPk(id);
+            if (!category) {
+                res.json (`Category with ${id} does not exist`)
             }
-        })
-        .then(res.json(`Section with id: ${id} succesfully deleted!`))
+            else {
+                await models.Category.destroy({
+                    where: {
+                        id: id
+                    }})
+                res.json(`User with id: ${id} succesfully deleted!`)
+            }                  
+        }   
+        catch (err) { 
+            const errObj = {};
+                err.errors.map( er => {
+                errObj[er.path] = er.message;
+            })
+            res.json(errObj);
+        }   
         
     }
 }
