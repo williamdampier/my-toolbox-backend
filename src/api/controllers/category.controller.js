@@ -2,29 +2,45 @@ const { json } = require('express');
 const {models} = require('../../db')
 
 
+
 class CategoryController {
     async createCategory(req,res) {
         const {title, section_id} = req.body;
+       
+  
         try {
-            const section = await models.Section.findByPk(section_id)
-
-            if (!section)  {res.json(`Section with id: ${section_id} does not exist`)}
-            else {
-                const newCategory = await models.Category.create({title: title, section_id: section_id})
+            const newCategory = await models.Category.create({title: title, section_id: section_id})
                 res.json(newCategory.dataValues)   
-            }
-        } 
+        }         
         catch (err) { 
             const errObj = {};
                 err.errors.map( er => {
                 errObj[er.path] = er.message;
             })
             res.json(errObj);
-        }   
+        }
     }
 
+
+
+
+
     async getCategories(req,res) {
-        try {
+        const section = req.query.section
+        if (section) {
+               
+                    await models.Category.findAll({
+                        where: {section_id: section}
+                    })
+                    .then((categories)=> categories.length ? res.json(categories) : res.json("No valid items or section does not exist"))
+                    .catch((err) =>  res.json(err));
+                
+                
+            }       
+        
+
+
+       else { try {
             const categories = await models.Category.findAll();
             res.json(categories);
         }
@@ -34,9 +50,12 @@ class CategoryController {
                 errObj[er.path] = er.message;
             })
             res.json(errObj);
-        } 
+        }  
         
     }
+}
+
+  
 
     async getCategoryById(req,res) {
         const id = req.params.id;
