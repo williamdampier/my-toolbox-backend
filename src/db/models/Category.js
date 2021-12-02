@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
           allowNull: false,
           unique: true
         }, 
-        sectionId : {
+        section_id : {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
