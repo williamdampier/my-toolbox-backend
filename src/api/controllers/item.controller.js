@@ -8,7 +8,7 @@ class ItemController {
         const {category_id, title, icon, description, picture, link} = req.body;
         await models.Item.create({category_id, title, icon, description, picture, link})
         .then((item) => res.json(item))
-        .catch((err) => res.json(err.parent.detail))    
+        .catch((err) => res.json(err.errors[0].message))    
     }
 
     async getItems(req,res) {
@@ -18,24 +18,22 @@ class ItemController {
                     where: {category_id: category}
                     })
                     .then((items)=> items.length ? res.json(items) : res.json(`No valid items or category with id ${category} does not exist`))
-                    .catch((err) =>  res.json(err.parent.detail));              
+                    .catch((err) =>  res.json(err.errors[0].message));              
         }       
 
        else { 
            await models.Item.findAll()
            .then((categories) => res.json(categories))
-           .catch((err) =>  res.json(err.parent.detail));  
+           .catch((err) =>  res.json(err.errors[0].message));  
         }
     }
-
-  
 
     async getItemById(req,res) {
 
         const id = req.params.id;
         await models.Item.findByPk(id)
         .then((item) => item ? res.json(item) : res.json(`Item with id: ${id} does not exist`))
-        .catch((err) =>  res.json(err.parent.detail));                
+        .catch((err) =>  res.json(err.errors[0].message));                
     }
 
     async updateItem(req,res) {
@@ -46,7 +44,7 @@ class ItemController {
             where: { id: id }
             })
             .then(()=> res.json(`Category with id: ${id} succesfully updated!`))
-            .catch((err) =>  res.json(err.parent.detail));  
+            .catch((err) =>  res.json(err.errors[0].message));  
            
         }     
 
@@ -59,7 +57,7 @@ class ItemController {
                 id: id
             }})
             .then(() => res.json(`Item with id: ${id} succesfully deleted!`))
-            .catch((err) =>  res.json(err.parent.detail)) 
+            .catch((err) =>  res.json(err.errors[0].message)) 
        }
        else {res.json(`Item with id: ${id} does not exist!`)}
         
