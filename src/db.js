@@ -8,8 +8,7 @@ const sequelize = new Sequelize(`postgres://${process.env.PG_USER}:${process.env
 const modelDefiners = [
 	require('./db/models/Section'),
 	require('./db/models/Category'),
-	require('./db/models/Item'),
-	require('./db/models/Handler')
+	require('./db/models/Item')
 	// Add more models here...
 	// require('./models/item'),
 ];
