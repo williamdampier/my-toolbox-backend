@@ -1,13 +1,16 @@
 const express = require('express')
 const app = express()
 const sequelize = require('./src/db')
-
+const cors = require('cors');
 const sectionRouter = require('./src/api/routes/section.routes')
 const categoryRouter = require('./src/api/routes/category.routes')
 const itemRouter = require('./src/api/routes/item.routes')
 
 require('dotenv').config()
 app.use(express.json())
+app.use(cors({
+  origin: '*'
+}))
 
 app.use('/section', sectionRouter)
 app.use('/category', categoryRouter)
@@ -17,7 +20,7 @@ const PORT = process.env.PORT || 5001
 
 
 app.get('/', (req, res) => {
-    res.send("Hello there")
+    res.send("/section /category /item");
 })
 
 

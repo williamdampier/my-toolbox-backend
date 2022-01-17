@@ -36,8 +36,7 @@ class CategoryController {
        .then((category) => category ? res.json(category) : res.json(`Category with id: ${id} does not exist`))
        .catch((err) =>  res.json(err));                
     }
-               
-    
+
 
     async updateCategory(req,res) {
         const id = req.params.id;
