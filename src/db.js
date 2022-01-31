@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize(`postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DB_NAME}`) 
+const sequelize = new Sequelize(`${process.env.DATABASE_URL}`) 
 
 
 const modelDefiners = [
