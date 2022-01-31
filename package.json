@@ -15,6 +15,7 @@
   "devDependencies": {},
   "scripts": {
     "dev": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "williamdampier <74879032+williamdampier@users.noreply.github.com>",
